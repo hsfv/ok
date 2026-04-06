@@ -2044,13 +2044,13 @@ Library:ResolveImage(Page.Icon, Items["Inactive"].Instance, "Image")
                     PlaceholderColor3 = FromRGB(175, 175, 175),
                     ZIndex = 2,
                     TextSize = 14,
-                    Size = UDim2New(0, 131, 0, 30),
+                    Size = UDim2New(0, 167, 0, 30),
                     TextColor3 = FromRGB(255, 255, 255),
                     BorderColor3 = FromRGB(0, 0, 0),
                     Text = "",
                     Name = "\0",
                     PlaceholderText = "Search",
-                    Position = UDim2New(0, 465, 0, 12),
+                    Position = UDim2New(0, 429, 0, 12),
                     TextXAlignment = Enum.TextXAlignment.Left,
                     CursorPosition = -1,
                     BorderSizePixel = 0,
@@ -2176,7 +2176,7 @@ Library:ResolveImage(Page.Icon, Items["Inactive"].Instance, "Image")
 
             Instances:Create("UICorner", {
                 Parent = Items["Inactive"].Instance,
-                CornerRadius = UDimNew(1, 0)
+                CornerRadius = UDimNew(0, 8)
             }) 
 
             Items["UIStroke"] = Instances:Create("UIStroke", {
