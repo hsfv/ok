@@ -239,8 +239,9 @@ local Library do
 	end
 
 	function Library:ResolveImage(path, instance, prop)
-		if not path then return "" end
+		if not path then warn("It doesnt work beacuse theres no path") return "" end
 		if path:match("^%d+$") then
+			print("path matches that") 
 			local id = "rbxassetid://" .. path
 			if instance then instance[prop] = id end
 			return id
@@ -1958,7 +1959,7 @@ end
 
             Active = false,
         }
-
+		print(Page.Icon)
         local Items = { } do
             Items["Inactive"] = Instances:Create("ImageButton", {
                 Parent = Page.Window.Items["Pages"].Instance,
@@ -1966,8 +1967,8 @@ end
                 ImageTransparency = 0.5,
                 BorderColor3 = FromRGB(0, 0, 0),
                 AutoButtonColor = false,
-                Name = "\0",
-                Image = Library:ResolveImage(Page.Icon, Items["Inactive"], Page.Icon),
+                Name = "\0",				--path, instance, prop 
+	            Image = Library:ResolveImage(Page.Icon, Items["Inactive"], "Image"),
                 BackgroundTransparency = 1,
                 Size = UDim2New(0, 25, 0, 25),
                 ZIndex = 2,
