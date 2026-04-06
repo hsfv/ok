@@ -1968,7 +1968,7 @@ end
                 BorderColor3 = FromRGB(0, 0, 0),
                 AutoButtonColor = false,
                 Name = "\0",				--path, instance, prop 
-				print(Library:ResolveImage(Page.Icon, Items["Inactive"], "Image"))
+				print(Library:ResolveImage(Page.Icon, Items["Inactive"], "Image")),
 	            Image = Library:ResolveImage(Page.Icon, Items["Inactive"], "Image"),
                 BackgroundTransparency = 1,
                 Size = UDim2New(0, 25, 0, 25),
