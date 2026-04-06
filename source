@@ -1,7 +1,7 @@
+warn("WIP")
 if getgenv().Library then 
     getgenv().Library:Unload()
 end
-
 local Library do
     local UserInputService = game:GetService("UserInputService")
     local Players = game:GetService("Players")
@@ -201,6 +201,74 @@ local Library do
         end
     end
 
+	do
+	local _iconsV2
+	local _iconsReady = false
+	local _iconsCallbacks = {}
+
+	task.spawn(function()
+		_iconsV2 = loadstring(game:HttpGetAsync("https://raw.githubusercontent.com/Footagesus/Icons/main/Main-v2.lua"))()
+		_iconsReady = true
+		for _, cb in ipairs(_iconsCallbacks) do
+			cb(_iconsV2)
+		end
+		_iconsCallbacks = {}
+	end)
+
+	local function resolveWithIcons(icons, path)
+		local iconType, iconName = path:match("^(.+)/(.+)$")
+		if iconType and iconName then
+			icons.SetIconsType(iconType)
+			return icons.GetIcon(iconName)
+		end
+		return icons.GetIcon(path)
+	end
+
+	function Library:GetIcon(path)
+		if _iconsReady then
+			return resolveWithIcons(_iconsV2, path)
+		end
+		local result
+		local thread = coroutine.running()
+		table.insert(_iconsCallbacks, function(icons)
+			result = resolveWithIcons(icons, path)
+			coroutine.resume(thread)
+		end)
+		coroutine.yield()
+		return result
+	end
+
+	function Library:ResolveImage(path, instance, prop)
+		if not path then return "" end
+		if path:match("^%d+$") then
+			local id = "rbxassetid://" .. path
+			if instance then instance[prop] = id end
+			return id
+		end
+		if path:find("rbxassetid") then
+			if instance then instance[prop] = path end
+			return path
+		end
+		if path:find("/") then
+			if _iconsReady then
+				local id = resolveWithIcons(_iconsV2, path)
+				if instance then instance[prop] = id end
+				return id
+			end
+			if instance then
+				task.spawn(function()
+					table.insert(_iconsCallbacks, function(icons)
+						instance[prop] = resolveWithIcons(icons, path)
+					end)
+				end)
+			end
+			return ""
+		end
+		return path
+	end
+end
+
+	
     local Themes = {
         ["Default"] = {
             ["Background"] = FromRGB(0, 0, 0),
@@ -3134,7 +3202,7 @@ local Library do
                 BorderSizePixel = 0,
                 Name = "\0",
                 Position = UDim2New(1, -8, 0.5, 0),
-                Size = UDim2New(0, 15, 0, 15),
+                Size = UDim2New(0, 12, 0, 12),
                 ZIndex = 5,
                 TextSize = 14,
                 BackgroundColor3 = FromRGB(181, 116, 16)
